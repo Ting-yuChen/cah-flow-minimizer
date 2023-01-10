@@ -10,8 +10,7 @@
  * Graph is the graph representation in adjacency matrix
  */
 float Graph[N][N];
-/*void clearline() 
-{ for (int ch = 0; (ch != EOF) && (ch != '\n'); ch = fgetc(stdin)); }*/
+
 
 
 typedef  char Name[NAMELENGTH];
@@ -24,11 +23,7 @@ typedef  char Name[NAMELENGTH];
 
 
  
-/*
- * u is the current or source vertex
- * v is the next or destination vertex
- * w is the edge weight or path cost
- */
+
  
  
 int USER_AMOUNT, CASH_FLOW;
@@ -102,14 +97,7 @@ int main(){
     scanf("%d",&USER_AMOUNT);
 namelst=makenamelist(USER_AMOUNT,namelst);
 
-/*Name* namelst = ((Name*)malloc(USER_AMOUNT * NAMELENGTH));
 
-clearline();
-    
-for (int i = 0; i < USER_AMOUNT; i++) {
-    printf("Name %d :  ", i);
-    fgets(namelst[i], NAMELENGTH , stdin);
-}*/
     InputGraph(USER_AMOUNT);
     
     
