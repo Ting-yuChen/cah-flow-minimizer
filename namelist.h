@@ -2,5 +2,6 @@
 
 
 #define NAMELENGTH 25
+typedef  char Name[NAMELENGTH];
 void cleanline();
-void makenamelist(int k);
+Name* makenamelist(int k,Name*p);

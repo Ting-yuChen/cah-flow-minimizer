@@ -10,11 +10,12 @@
  * Graph is the graph representation in adjacency matrix
  */
 float Graph[N][N];
-void clearline() 
-{ for (int ch = 0; (ch != EOF) && (ch != '\n'); ch = fgetc(stdin)); }
+/*void clearline() 
+{ for (int ch = 0; (ch != EOF) && (ch != '\n'); ch = fgetc(stdin)); }*/
 
-char *namelist;
+
 typedef  char Name[NAMELENGTH];
+ Name *namelst;
 
 
 
@@ -34,30 +35,12 @@ int USER_AMOUNT, CASH_FLOW;
 int u, v;
 float w,tempnetcash=0,BIG,SMALL,TEMPBIG,TEMPSMALL,DIFFERENCE,fabsSMALL;
 int i=0, j,k,SMALLADRESS,BIGADRESS;
-char* name;
 
 
 
 
-/*char createnamelist(int USER_AMOUNT)
-{
-    int k;
-    k=USER_AMOUNT;
-    Name* namelist = ((Name*)malloc(k * NAMESIZE));
 
-clearline();
-    
-for (i = 0; i < k; i++) {
-    printf("User %d : ", i );
-    fgets(namelist[i], NAMESIZE , stdin);
-}
 
-for(i=0;i<USER_AMOUNT;i++)
-    {
-        printf("User %d is %s \n",i,namelist[i]);
-    }
-;
-}*/
 void InputGraph(int b){
    
 int USER_AMOUNT=b;
@@ -77,8 +60,8 @@ CASH_FLOW+=2*k;
  
     // Input Graph
     printf("Enter (user flow money):\n");
-     printf("Column 1: borrower\n");
-    printf("Column 2: lender\n");
+    printf("Column 1: borrower(User Number)\n");
+    printf("Column 2: lender(User Number)\n");
     printf("Column 3: money\n");
     for(i = 0; i < CASH_FLOW; ++i){
         scanf("%d%d%f", &u, &v, &w);
@@ -92,31 +75,41 @@ void PrintGraph(){
     // Print the current Graph
     printf("\n");
     printf("Graph:\n");
-    for(i = 0; i < USER_AMOUNT; ++i){
+   for(i=0;i<USER_AMOUNT;i++)
+   {
+    printf("\t%s",namelst[i]);
+   }
+   printf("\n");
+
+    for(i = 0; i < USER_AMOUNT; ++i)
+    {
+        printf("%s\t",namelst[i]);
+    {
         for(j = 0; j < USER_AMOUNT; ++j)
-            printf("%.3f ", Graph[i][j]);
+            printf("%.3f\t",Graph[i][j]);
         printf("\n");
+    }
     }
     printf("\n");
 }
  
 int main(){
  
- 
+
     printf("Cash_Flow_Minimizer:\n");
     printf("============================\n\n");
     printf("Please enter user amount: ");
     scanf("%d",&USER_AMOUNT);
+namelst=makenamelist(USER_AMOUNT,namelst);
 
-
-Name* namelst = ((Name*)malloc(USER_AMOUNT * NAMELENGTH));
+/*Name* namelst = ((Name*)malloc(USER_AMOUNT * NAMELENGTH));
 
 clearline();
     
 for (int i = 0; i < USER_AMOUNT; i++) {
     printf("Name %d :  ", i);
     fgets(namelst[i], NAMELENGTH , stdin);
-}
+}*/
     InputGraph(USER_AMOUNT);
     
     
@@ -140,7 +133,7 @@ for (int i = 0; i < USER_AMOUNT; i++) {
 
     for(i=0;i<USER_AMOUNT;i++)
     {
-        printf("%.3f\t",NetCash[i]);
+        printf("Netcash for %s: %.3f\n",namelst[i],NetCash[i]);
     }
     BIG=NetCash[0];
     SMALL=NetCash[0];
@@ -165,7 +158,7 @@ for (int i = 0; i < USER_AMOUNT; i++) {
 
     if(DIFFERENCE>0)
     {
-        printf("\n%s should pay %s %f dollars\n",namelst[SMALLADRESS],namelst[BIGADRESS],fabsSMALL);
+        printf("%s should pay %s %f dollars\n",namelst[SMALLADRESS],namelst[BIGADRESS],fabsSMALL);
        
         NetCash[BIGADRESS]=DIFFERENCE;
          NetCash[SMALLADRESS]=0;
@@ -175,14 +168,14 @@ for (int i = 0; i < USER_AMOUNT; i++) {
 
    else if(DIFFERENCE<0)
     {
-        printf("\n%s should pay %s %f dollars\n",namelst[SMALLADRESS],namelst[BIGADRESS],BIG);
+        printf("%s should pay %s %f dollars\n",namelst[SMALLADRESS],namelst[BIGADRESS],BIG);
         NetCash[SMALLADRESS]=DIFFERENCE;
         NetCash[BIGADRESS]=0;
         BIG=0;
         SMALL=0;
     }
     else if(DIFFERENCE==0)
-    {printf("\n%s should pay %s %f dollars\n",namelst[SMALLADRESS],namelst[BIGADRESS],BIG);
+    {printf("%s should pay %s %f dollars\n",namelst[SMALLADRESS],namelst[BIGADRESS],BIG);
     NetCash[SMALLADRESS]=0;
     NetCash[BIGADRESS]=0;
     }
@@ -193,17 +186,3 @@ for (int i = 0; i < USER_AMOUNT; i++) {
  
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
